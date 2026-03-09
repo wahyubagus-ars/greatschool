@@ -58,6 +58,7 @@ class QuizController extends Controller
                     }
                 }
             }
+            $quiz->loadCount('questions');
         } catch (\Exception $e) {
             // Relationship doesn't exist in current schema - silently ignore
             $quiz->setRelation('literacyContents', collect());
