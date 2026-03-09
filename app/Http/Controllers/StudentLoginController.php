@@ -10,6 +10,11 @@ class StudentLoginController extends Controller
 {
     public function showLoginForm()
     {
+        // CRITICAL FIX: Redirect authenticated students to dashboard instead of showing login form
+        if (Auth::guard('student')->check()) {
+            return redirect()->route('student.dashboard');
+        }
+
         return view('auth.student-login');
     }
 
@@ -22,11 +27,12 @@ class StudentLoginController extends Controller
 
         if (Auth::guard('student')->attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended('/student/dashboard');
+            // CRITICAL FIX: Use route name instead of hardcoded path for proper redirect
+            return redirect()->intended(route('student.dashboard'));
         }
 
         throw ValidationException::withMessages([
-            'nis' => __('The provided credentials do not match our records.'),
+            'nis' => __('auth.failed'),
         ]);
     }
 
@@ -35,6 +41,7 @@ class StudentLoginController extends Controller
         Auth::guard('student')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+
+        return redirect()->route('student.login')->with('success', 'You have been logged out successfully.');
     }
 }

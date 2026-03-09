@@ -20,6 +20,17 @@
             <p class="text-gray-500 mt-1">Sign in to access your academic resources</p>
         </div>
 
+        @if(session('success'))
+            <div class="mb-6 bg-green-50 text-green-700 px-4 py-3 rounded-lg text-sm">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div class="mb-6 bg-red-50 text-red-700 px-4 py-3 rounded-lg text-sm">
+                {{ $errors->first() }}
+            </div>
+        @endif
         <!-- Form -->
         <div class="p-8">
             <form method="POST" action="{{ route('student.login') }}" class="space-y-6">
