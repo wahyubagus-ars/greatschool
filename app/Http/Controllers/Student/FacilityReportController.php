@@ -8,6 +8,8 @@ use App\Models\FacilityReport;
 use App\Models\FacilityEvidence;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class FacilityReportController extends Controller
 {
@@ -21,9 +23,6 @@ class FacilityReportController extends Controller
         });
     }
 
-    /**
-     * Display a listing of the student's facility reports.
-     */
     public function index()
     {
         $reports = FacilityReport::where('student_id', $this->student->id)
@@ -33,17 +32,10 @@ class FacilityReportController extends Controller
         return view('student.facility-reports.index', compact('reports'));
     }
 
-    /**
-     * Show the form for creating a new report.
-     */
     public function create()
     {
         return view('student.facility-reports.create');
     }
-
-    /**
-     * Store a newly created report in storage.
-     */
     public function store(StoreFacilityReportRequest $request)
     {
         $validated = $request->validated();
@@ -57,28 +49,57 @@ class FacilityReportController extends Controller
             'status' => 'pending',
         ]);
 
-        // Handle evidence files if any
+        // Handle evidence files
         if ($request->hasFile('evidence_files')) {
             foreach ($request->file('evidence_files') as $file) {
-                $path = $file->store('facility-evidence', 'public');
-                FacilityEvidence::create([
-                    'report_id' => $report->id,
-                    'file_path' => $path,
-                    'file_name' => $file->getClientOriginalName(),
-                ]);
+                try {
+
+                    $filename = Str::uuid() . '_' . $file->getClientOriginalName();
+
+                    $path = "facility-evidence/{$this->student->id}/{$report->id}/{$filename}";
+
+                    // SAME LOGIC AS BULLYING REPORT
+                    $storedPath = Storage::disk('supabase')->putFile(
+                        dirname($path),
+                        $file,
+                        'public'
+                    );
+
+                    // Generate URL via driver
+                    $publicUrl = Storage::disk('supabase')->url($storedPath);
+
+                    FacilityEvidence::create([
+                        'report_id' => $report->id,
+                        'file_path' => $storedPath,
+                        'file_name' => $file->getClientOriginalName(),
+                        'public_url' => $publicUrl,
+                    ]);
+
+                } catch (\Exception $e) {
+
+                    Log::error('Supabase upload failed', [
+                        'student_id' => $this->student->id,
+                        'report_id' => $report->id,
+                        'filename' => $file->getClientOriginalName(),
+                        'error' => $e->getMessage(),
+                        'trace' => $e->getTraceAsString()
+                    ]);
+
+                    session()->flash(
+                        'warning',
+                        'Report created but some evidence files failed to upload. Please try again later.'
+                    );
+                }
             }
         }
 
-        return redirect()->route('student.facility-reports.show', $report)
+        return redirect()
+            ->route('student.facility-reports.show', $report)
             ->with('success', 'Facility report submitted successfully.');
     }
 
-    /**
-     * Display the specified report.
-     */
     public function show(FacilityReport $facilityReport)
     {
-        // Ensure the student owns this report
         if ($facilityReport->student_id !== $this->student->id) {
             abort(403);
         }
