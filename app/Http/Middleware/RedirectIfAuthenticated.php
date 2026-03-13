@@ -12,16 +12,31 @@ class RedirectIfAuthenticated
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
-            // CRITICAL: Handle student guard specifically
-            if (Auth::guard($guard)->check()) {
-                if ($guard === 'student') {
-                    return redirect()->route('student.dashboard');
+            try {
+                // Only check if guard is specified and user is authenticated
+                if ($guard && Auth::hasGuard($guard)) {
+                    if (Auth::guard($guard)->check()) {
+                        if ($guard === 'student') {
+                            return redirect()->route('student.dashboard');
+                        } elseif ($guard === 'admin') {
+                            return redirect()->route('admin.dashboard');
+                        }
+                        return redirect('/home');
+                    }
+                } elseif ($guard === null && Auth::check()) {
+                    return redirect('/home');
                 }
-                return redirect('/home');
+            } catch (\Exception $e) {
+                // DO NOT flush session - this destroys CSRF token!
+                // Just log the error and continue to login page
+                \Log::warning('Auth check failed for guard: ' . ($guard ?? 'null'), [
+                    'error' => $e->getMessage(),
+                    'ip' => $request->ip(),
+                ]);
+                continue;
             }
         }
 
         return $next($request);
     }
-
 }
