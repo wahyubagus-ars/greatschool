@@ -35,7 +35,7 @@ class FacilityReport extends Model
         return $this->belongsTo(Student::class);
     }
 
-    public function verifiedBy(): BelongsTo
+    public function verifiedByAdmin(): BelongsTo
     {
         return $this->belongsTo(Admin::class, 'verified_by_admin_id');
     }

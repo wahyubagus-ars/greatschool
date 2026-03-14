@@ -85,6 +85,8 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     Route::prefix('students')->name('students.')->group(function () {
         Route::get('/', [StudentManagementController::class, 'index'])->name('index');
         Route::get('/{student}', [StudentManagementController::class, 'show'])->name('show');
+        Route::post('/{student}/reset-password', [StudentManagementController::class, 'resetPassword'])->name('reset-password');
+        Route::post('/{student}/add-points', [StudentManagementController::class, 'addPoints'])->name('add-points');
     });
 
     Route::resource('quizzes', QuizManagementController::class)->only(['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']);
