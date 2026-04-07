@@ -91,7 +91,18 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
 
     Route::resource('quizzes', QuizManagementController::class)->only(['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']);
 
-    Route::resource('literacy-contents', LiteracyContentController::class)->only(['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']);
+    Route::prefix('literacy-contents')->name('literacy-contents.')->group(function () {
+        // Custom routes must come BEFORE the resource route
+        Route::get('/upload', [LiteracyContentController::class, 'showUploadForm'])->name('upload-form');
+        Route::post('/upload', [LiteracyContentController::class, 'upload'])->name('upload');
+        Route::get('/download-template', [LiteracyContentController::class, 'downloadTemplate'])->name('download-template');
+        Route::get('/download-failed-report/{sessionId}', [LiteracyContentController::class, 'downloadFailedReport'])->name('download-failed-report');
+
+        // Now register the resource routes (AFTER custom routes)
+        Route::resource('', LiteracyContentController::class)->only([
+            'index', 'show', 'create', 'store', 'edit', 'update', 'destroy'
+        ]);
+    });
 });
 
 
