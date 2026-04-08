@@ -89,7 +89,18 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
         Route::post('/{student}/add-points', [StudentManagementController::class, 'addPoints'])->name('add-points');
     });
 
-    Route::resource('quizzes', QuizManagementController::class)->only(['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']);
+    Route::prefix('quizzes')->name('quizzes.')->group(function () {
+        // Custom routes must come BEFORE the resource route
+        Route::get('/upload', [QuizManagementController::class, 'showUploadForm'])->name('upload-form');
+        Route::post('/upload', [QuizManagementController::class, 'upload'])->name('upload');
+        Route::get('/download-template', [QuizManagementController::class, 'downloadTemplate'])->name('download-template');
+        Route::get('/download-failed-report/{sessionId}', [QuizManagementController::class, 'downloadFailedReport'])->name('download-failed-report');
+
+        // Now register the resource routes (AFTER custom routes)
+        Route::resource('', QuizManagementController::class)->only([
+            'index', 'show', 'create', 'store', 'edit', 'update', 'destroy'
+        ]);
+    });
 
     Route::prefix('literacy-contents')->name('literacy-contents.')->group(function () {
         // Custom routes must come BEFORE the resource route
