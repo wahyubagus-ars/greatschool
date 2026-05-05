@@ -1,19 +1,19 @@
 @extends('layouts.admin')
 
-@section('title', 'Report Details')
+@section('title', __('Report Details'))
 
 @section('page-header')
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div class="flex items-center gap-3">
             <a href="{{ route('admin.bullying-reports.index') }}"
                class="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-               title="Back to Reports">
+               title="{{ __('Back to Reports') }}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5 text-gray-600">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                 </svg>
             </a>
             <div>
-                <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">Report #{{ str_pad($bullyingReport->id, 5, '0', STR_PAD_LEFT) }}</h1>
+                <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">{{ __('Report #:id', ['id' => str_pad($bullyingReport->id, 5, '0', STR_PAD_LEFT)]) }}</h1>
                 <p class="mt-1 text-gray-600">{{ $bullyingReport->title }}</p>
             </div>
         </div>
@@ -39,7 +39,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 @endif
-                {{ ucfirst($bullyingReport->status) }}
+                {{ __(ucfirst($bullyingReport->status)) }}
             </span>
         </div>
     </div>
@@ -57,31 +57,31 @@
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-slate-600">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                         </svg>
-                        Report Information
+                        {{ __('Report Information') }}
                     </h2>
                 </div>
                 <div class="p-6 space-y-5">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Reporter Type</label>
+                            <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">{{ __('Reporter Type') }}</label>
                             <p class="text-sm font-medium text-gray-900 capitalize">{{ $bullyingReport->reporter_type }}</p>
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Incident Date</label>
+                            <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">{{ __('Incident Date') }}</label>
                             <p class="text-sm font-medium text-gray-900">{{ $bullyingReport->incident_date->format('F d, Y') }}</p>
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Location</label>
+                            <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">{{ __('Location') }}</label>
                             <p class="text-sm font-medium text-gray-900">{{ $bullyingReport->location }}</p>
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Reported On</label>
+                            <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">{{ __('Reported On') }}</label>
                             <p class="text-sm font-medium text-gray-900">{{ $bullyingReport->created_at->format('F d, Y \a\t H:i') }}</p>
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Description</label>
+                        <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">{{ __('Description') }}</label>
                         <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
                             <p class="text-sm text-gray-800 whitespace-pre-line">{{ $bullyingReport->description }}</p>
                         </div>
@@ -90,9 +90,9 @@
                     @if($bullyingReport->verification_note)
                         <div>
                             <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">
-                                Admin Verification Note
+                                {{ __('Admin Verification Note') }}
                                 @if($bullyingReport->verifiedByAdmin)
-                                    <span class="text-gray-400 normal-case">— by {{ $bullyingReport->verifiedByAdmin->full_name }}</span>
+                                    <span class="text-gray-400 normal-case">— {{ __('by') }} {{ $bullyingReport->verifiedByAdmin->full_name }}</span>
                                 @endif
                             </label>
                             <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
@@ -100,7 +100,7 @@
                             </div>
                             @if($bullyingReport->verified_at)
                                 <p class="text-xs text-gray-500 mt-2">
-                                    Verified on {{ $bullyingReport->verified_at->format('F d, Y \a\t H:i') }}
+                                    {{ __('Verified on') }} {{ $bullyingReport->verified_at->format('F d, Y \a\t H:i') }}
                                 </p>
                             @endif
                         </div>
@@ -116,7 +116,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-slate-600">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                             </svg>
-                            Evidence ({{ $bullyingReport->evidence->count() }})
+                            {{ __('Evidence') }} ({{ $bullyingReport->evidence->count() }})
                         </h2>
                     </div>
                     <div class="p-6">
@@ -143,7 +143,7 @@
                                         <a href="{{ $evidence->public_url ?? '#' }}"
                                            download="{{ $evidence->file_name }}"
                                            class="p-2 bg-white rounded-full hover:bg-gray-100 transition-colors"
-                                           title="Download">
+                                           title="{{ __('Download') }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-700">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                                             </svg>
@@ -167,7 +167,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-slate-600">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9Z" />
                             </svg>
-                            Other Reports by This Student
+                            {{ __('Other Reports by This Student') }}
                         </h2>
                     </div>
                     <div class="divide-y divide-gray-100">
@@ -187,7 +187,7 @@
                                         ];
                                     @endphp
                                     <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium {{ $badgeStyles[$report->status] }}">
-                                        {{ ucfirst($report->status) }}
+                                        {{ __(ucfirst($report->status)) }}
                                     </span>
                                 </div>
                             </a>
@@ -207,7 +207,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-slate-600">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                         </svg>
-                        Student Information
+                        {{ __('Student Information') }}
                     </h2>
                 </div>
                 <div class="p-6">
@@ -217,7 +217,7 @@
                         </div>
                         <div class="ml-4">
                             <p class="text-lg font-semibold text-gray-900">{{ $bullyingReport->student->full_name }}</p>
-                            <p class="text-sm text-gray-500">NIS: {{ $bullyingReport->student->nis }}</p>
+                            <p class="text-sm text-gray-500">{{ __('NIS:') }} {{ $bullyingReport->student->nis }}</p>
                         </div>
                     </div>
                     <div class="space-y-3 pt-4 border-t border-gray-100">
@@ -241,12 +241,12 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-400 mr-2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                             </svg>
-                            <span class="text-gray-700">Joined {{ $bullyingReport->student->created_at->format('M Y') }}</span>
+                            <span class="text-gray-700">{{ __('Joined') }} {{ $bullyingReport->student->created_at->format('M Y') }}</span>
                         </div>
                     </div>
                     <a href="{{ route('admin.students.show', $bullyingReport->student->id) }}"
                        class="mt-4 w-full inline-flex items-center justify-center px-4 py-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-300 text-slate-700 font-medium rounded-lg transition-all duration-200">
-                        View Full Profile
+                        {{ __('View Full Profile') }}
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                         </svg>
@@ -262,7 +262,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-slate-600">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l-2.25-2.25a2.652 2.625 0 00-3.782 0L2.25 15.75a2.652 2.652 0 000 3.782l3.127 3.127m9-10.695l-3.127-3.127" />
                             </svg>
-                            Take Action
+                            {{ __('Take Action') }}
                         </h2>
                     </div>
                     <div class="p-6 space-y-4">
@@ -273,7 +273,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Verify Report
+                            {{ __('Verify Report') }}
                         </button>
 
                         <!-- Reject Button -->
@@ -283,11 +283,11 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                             </svg>
-                            Reject Report
+                            {{ __('Reject Report') }}
                         </button>
 
                         <p class="text-xs text-gray-500 text-center pt-2">
-                            This action cannot be undone. Make sure you've reviewed all evidence.
+                            {{ __('This action cannot be undone. Make sure you\'ve reviewed all evidence.') }}
                         </p>
                     </div>
                 </div>
@@ -299,7 +299,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-slate-600">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Report Status
+                            {{ __('Report Status') }}
                         </h2>
                     </div>
                     <div class="p-6">
@@ -311,10 +311,10 @@
                                     </svg>
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-sm font-medium text-green-800">Report Verified</p>
+                                    <p class="text-sm font-medium text-green-800">{{ __('Report Verified') }}</p>
                                     <p class="text-xs text-green-600 mt-0.5">
                                         @if($bullyingReport->verifiedByAdmin)
-                                            by {{ $bullyingReport->verifiedByAdmin->full_name }}
+                                            {{ __('by') }} {{ $bullyingReport->verifiedByAdmin->full_name }}
                                         @endif
                                     </p>
                                 </div>
@@ -327,10 +327,10 @@
                                     </svg>
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-sm font-medium text-gray-800">Report Rejected</p>
+                                    <p class="text-sm font-medium text-gray-800">{{ __('Report Rejected') }}</p>
                                     <p class="text-xs text-gray-600 mt-0.5">
                                         @if($bullyingReport->verifiedByAdmin)
-                                            by {{ $bullyingReport->verifiedByAdmin->full_name }}
+                                            {{ __('by') }} {{ $bullyingReport->verifiedByAdmin->full_name }}
                                         @endif
                                     </p>
                                 </div>
@@ -347,7 +347,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-slate-600">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        Timeline
+                        {{ __('Timeline') }}
                     </h2>
                 </div>
                 <div class="p-6">
@@ -360,9 +360,9 @@
                                 </svg>
                             </div>
                             <div class="flex-1 pt-1">
-                                <p class="text-sm font-medium text-gray-900">Report Submitted</p>
+                                <p class="text-sm font-medium text-gray-900">{{ __('Report Submitted') }}</p>
                                 <p class="text-xs text-gray-500">{{ $bullyingReport->created_at->format('M d, Y \a\t H:i') }}</p>
-                                <p class="text-xs text-gray-600 mt-1">by {{ $bullyingReport->student->full_name }}</p>
+                                <p class="text-xs text-gray-600 mt-1">{{ __('by') }} {{ $bullyingReport->student->full_name }}</p>
                             </div>
                         </div>
 
@@ -382,11 +382,11 @@
                                 </div>
                                 <div class="flex-1 pt-1">
                                     <p class="text-sm font-medium text-gray-900">
-                                        Report {{ ucfirst($bullyingReport->status) }}
+                                        {{ __('Report') }} {{ __(ucfirst($bullyingReport->status)) }}
                                     </p>
                                     <p class="text-xs text-gray-500">{{ $bullyingReport->verified_at->format('M d, Y \a\t H:i') }}</p>
                                     @if($bullyingReport->verifiedByAdmin)
-                                        <p class="text-xs text-gray-600 mt-1">by {{ $bullyingReport->verifiedByAdmin->full_name }}</p>
+                                        <p class="text-xs text-gray-600 mt-1">{{ __('by') }} {{ $bullyingReport->verifiedByAdmin->full_name }}</p>
                                     @endif
                                 </div>
                             </div>
@@ -453,17 +453,17 @@
                             </svg>
                         </div>
                         <div class="ml-3">
-                            <h3 class="text-lg font-semibold text-gray-900">Verify Report</h3>
-                            <p class="text-sm text-gray-500">Confirm this report is valid</p>
+                            <h3 class="text-lg font-semibold text-gray-900">{{ __('Verify Report') }}</h3>
+                            <p class="text-sm text-gray-500">{{ __('Confirm this report is valid') }}</p>
                         </div>
                     </div>
 
                     <div class="mb-4">
-                        <label for="verify_note" class="block text-sm font-medium text-gray-700 mb-1.5">Verification Note (Optional)</label>
+                        <label for="verify_note" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('Verification Note (Optional)') }}</label>
                         <textarea name="verification_note"
                                   id="verify_note"
                                   rows="3"
-                                  placeholder="Add any notes about this verification..."
+                                  placeholder="{{ __('Add any notes about this verification...') }}"
                                   class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 text-gray-900 placeholder-gray-400 shadow-sm resize-none"></textarea>
                     </div>
 
@@ -471,11 +471,11 @@
                         <button type="button"
                                 @click="closeModal()"
                                 class="flex-1 px-4 py-2.5 bg-white border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-all duration-200">
-                            Cancel
+                            {{ __('Cancel') }}
                         </button>
                         <button type="submit"
                                 class="flex-1 px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200">
-                            Confirm Verify
+                            {{ __('Confirm Verify') }}
                         </button>
                     </div>
                 </form>
@@ -539,34 +539,34 @@
                             </svg>
                         </div>
                         <div class="ml-3">
-                            <h3 class="text-lg font-semibold text-gray-900">Reject Report</h3>
-                            <p class="text-sm text-gray-500">This action requires a reason</p>
+                            <h3 class="text-lg font-semibold text-gray-900">{{ __('Reject Report') }}</h3>
+                            <p class="text-sm text-gray-500">{{ __('This action requires a reason') }}</p>
                         </div>
                     </div>
 
                     <div class="mb-4">
                         <label for="reject_note" class="block text-sm font-medium text-gray-700 mb-1.5">
-                            Rejection Reason <span class="text-red-500">*</span>
+                            {{ __('Rejection Reason') }} <span class="text-red-500">*</span>
                         </label>
                         <textarea name="verification_note"
                                   id="reject_note"
                                   rows="4"
                                   required
                                   minlength="10"
-                                  placeholder="Explain why this report is being rejected..."
+                                  placeholder="{{ __('Explain why this report is being rejected...') }}"
                                   class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all duration-200 text-gray-900 placeholder-gray-400 shadow-sm resize-none"></textarea>
-                        <p class="text-xs text-gray-500 mt-1">Minimum 10 characters</p>
+                        <p class="text-xs text-gray-500 mt-1">{{ __('Minimum 10 characters') }}</p>
                     </div>
 
                     <div class="flex gap-3">
                         <button type="button"
                                 @click="closeModal()"
                                 class="flex-1 px-4 py-2.5 bg-white border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-all duration-200">
-                            Cancel
+                            {{ __('Cancel') }}
                         </button>
                         <button type="submit"
                                 class="flex-1 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-all duration-200">
-                            Confirm Reject
+                            {{ __('Confirm Reject') }}
                         </button>
                     </div>
                 </form>

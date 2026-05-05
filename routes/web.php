@@ -15,7 +15,10 @@ use App\Http\Controllers\Student\StudentDashboardController;
 use App\Http\Controllers\StudentLoginController;
 use App\Models\BullyingReport;
 use App\Models\FacilityReport;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 
 // Public student routes (only accessible when NOT logged in as student)
@@ -116,6 +119,21 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     });
 });
 
+Route::get('lang/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'id'])) {
+        Session::put('locale', $locale);
+        App::setLocale($locale);
+        Session::save();
+        // Debug - remove after testing
+//        dd("Language switched to: " . $locale);
+
+//        dd(app()->getLocale());
+        Log::info('Language switched to: ' . $locale);
+        Log::info('Session locale: ' . Session::get('locale'));
+        Log::info('App locale: ' . App::getLocale());
+    }
+    return redirect()->back();
+})->name('lang.switch');
 
 View::composer('layouts.admin', function ($view) {
     $view->with('pendingBullyingReports', BullyingReport::where('status', 'pending')->count());

@@ -1,19 +1,19 @@
 @extends('layouts.admin')
 
-@section('title', 'Bullying Reports Management')
+@section('title', __('Bullying Reports Management'))
 
 @section('page-header')
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">Bullying Reports</h1>
-            <p class="mt-1 text-gray-600">Manage and verify student bullying reports</p>
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">{{ __('Bullying Reports') }}</h1>
+            <p class="mt-1 text-gray-600">{{ __('Manage and verify student bullying reports') }}</p>
         </div>
         <div class="flex items-center gap-2">
             <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-red-100 text-red-700">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-4 h-4 mr-1.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
                 </svg>
-                {{ $statusCounts['pending'] }} Pending
+                {{ $statusCounts['pending'] }} {{ __('Pending') }}
             </span>
         </div>
     </div>
@@ -26,7 +26,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                 <!-- Search -->
                 <div class="lg:col-span-2">
-                    <label for="search" class="block text-sm font-medium text-gray-700 mb-1.5">Search</label>
+                    <label for="search" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('Search') }}</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -37,45 +37,45 @@
                                name="search"
                                id="search"
                                value="{{ $search }}"
-                               placeholder="Search title, description, student..."
+                               placeholder="{{ __('Search title, description, student...') }}"
                                class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-slate-500 focus:border-slate-500 transition-all duration-200 text-gray-900 placeholder-gray-400 shadow-sm">
                     </div>
                 </div>
 
                 <!-- Status Filter -->
                 <div>
-                    <label for="status" class="block text-sm font-medium text-gray-700 mb-1.5">Status</label>
+                    <label for="status" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('Status') }}</label>
                     <select name="status"
                             id="status"
                             class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-slate-500 focus:border-slate-500 transition-all duration-200 text-gray-900 shadow-sm bg-white">
-                        <option value="all" {{ $status === 'all' ? 'selected' : '' }}>All Status</option>
-                        <option value="pending" {{ $status === 'pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="verified" {{ $status === 'verified' ? 'selected' : '' }}>Verified</option>
-                        <option value="rejected" {{ $status === 'rejected' ? 'selected' : '' }}>Rejected</option>
+                        <option value="all" {{ $status === 'all' ? 'selected' : '' }}>{{ __('All Status') }}</option>
+                        <option value="pending" {{ $status === 'pending' ? 'selected' : '' }}>{{ __('Pending') }}</option>
+                        <option value="verified" {{ $status === 'verified' ? 'selected' : '' }}>{{ __('Verified') }}</option>
+                        <option value="rejected" {{ $status === 'rejected' ? 'selected' : '' }}>{{ __('Rejected') }}</option>
                     </select>
                 </div>
 
                 <!-- Sort By -->
                 <div>
-                    <label for="sort" class="block text-sm font-medium text-gray-700 mb-1.5">Sort By</label>
+                    <label for="sort" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('Sort By') }}</label>
                     <select name="sort"
                             id="sort"
                             class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-slate-500 focus:border-slate-500 transition-all duration-200 text-gray-900 shadow-sm bg-white">
-                        <option value="created_at" {{ $sort === 'created_at' ? 'selected' : '' }}>Created Date</option>
-                        <option value="incident_date" {{ $sort === 'incident_date' ? 'selected' : '' }}>Incident Date</option>
-                        <option value="student_name" {{ $sort === 'student_name' ? 'selected' : '' }}>Student Name</option>
-                        <option value="status" {{ $sort === 'status' ? 'selected' : '' }}>Status</option>
+                        <option value="created_at" {{ $sort === 'created_at' ? 'selected' : '' }}>{{ __('Created Date') }}</option>
+                        <option value="incident_date" {{ $sort === 'incident_date' ? 'selected' : '' }}>{{ __('Incident Date') }}</option>
+                        <option value="student_name" {{ $sort === 'student_name' ? 'selected' : '' }}>{{ __('Student Name') }}</option>
+                        <option value="status" {{ $sort === 'status' ? 'selected' : '' }}>{{ __('Status') }}</option>
                     </select>
                 </div>
 
                 <!-- Order -->
                 <div>
-                    <label for="order" class="block text-sm font-medium text-gray-700 mb-1.5">Order</label>
+                    <label for="order" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('Order') }}</label>
                     <select name="order"
                             id="order"
                             class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-slate-500 focus:border-slate-500 transition-all duration-200 text-gray-900 shadow-sm bg-white">
-                        <option value="desc" {{ $order === 'desc' ? 'selected' : '' }}>Newest First</option>
-                        <option value="asc" {{ $order === 'asc' ? 'selected' : '' }}>Oldest First</option>
+                        <option value="desc" {{ $order === 'desc' ? 'selected' : '' }}>{{ __('Newest First') }}</option>
+                        <option value="asc" {{ $order === 'asc' ? 'selected' : '' }}>{{ __('Oldest First') }}</option>
                     </select>
                 </div>
             </div>
@@ -83,7 +83,7 @@
             <!-- Date Range -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <label for="date_from" class="block text-sm font-medium text-gray-700 mb-1.5">From Date</label>
+                    <label for="date_from" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('From Date') }}</label>
                     <input type="date"
                            name="date_from"
                            id="date_from"
@@ -91,7 +91,7 @@
                            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-slate-500 focus:border-slate-500 transition-all duration-200 text-gray-900 shadow-sm">
                 </div>
                 <div>
-                    <label for="date_to" class="block text-sm font-medium text-gray-700 mb-1.5">To Date</label>
+                    <label for="date_to" class="block text-sm font-medium text-gray-700 mb-1.5">{{ __('To Date') }}</label>
                     <input type="date"
                            name="date_to"
                            id="date_to"
@@ -107,17 +107,17 @@
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                     </svg>
-                    Apply Filters
+                    {{ __('Apply Filters') }}
                 </button>
                 <a href="{{ route('admin.bullying-reports.index') }}"
                    class="inline-flex items-center px-4 py-2.5 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-lg transition-all duration-200">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
                     </svg>
-                    Reset
+                    {{ __('Reset') }}
                 </a>
                 <span class="text-sm text-gray-500 ml-auto">
-                    Total: <strong>{{ $statusCounts['all'] }}</strong> reports
+                    {{ __('Total:') }} <strong>{{ $statusCounts['all'] }}</strong> {{ __('reports') }}
                 </span>
             </div>
         </form>
@@ -127,28 +127,28 @@
     <div class="flex flex-wrap gap-2 mb-6">
         <a href="{{ route('admin.bullying-reports.index', array_merge($queryParams, ['status' => 'all'])) }}"
            class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ $status === 'all' ? 'bg-slate-700 text-white shadow-md' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50' }}">
-            All
+            {{ __('All') }}
             <span class="ml-2 px-2 py-0.5 rounded-full text-xs {{ $status === 'all' ? 'bg-slate-600 text-white' : 'bg-gray-100 text-gray-600' }}">
                 {{ $statusCounts['all'] }}
             </span>
         </a>
         <a href="{{ route('admin.bullying-reports.index', array_merge($queryParams, ['status' => 'pending'])) }}"
            class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ $status === 'pending' ? 'bg-red-600 text-white shadow-md' : 'bg-white text-red-700 border border-red-300 hover:bg-red-50' }}">
-            Pending
+            {{ __('Pending') }}
             <span class="ml-2 px-2 py-0.5 rounded-full text-xs {{ $status === 'pending' ? 'bg-red-500 text-white' : 'bg-red-100 text-red-600' }}">
                 {{ $statusCounts['pending'] }}
             </span>
         </a>
         <a href="{{ route('admin.bullying-reports.index', array_merge($queryParams, ['status' => 'verified'])) }}"
            class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ $status === 'verified' ? 'bg-green-600 text-white shadow-md' : 'bg-white text-green-700 border border-green-300 hover:bg-green-50' }}">
-            Verified
+            {{ __('Verified') }}
             <span class="ml-2 px-2 py-0.5 rounded-full text-xs {{ $status === 'verified' ? 'bg-green-500 text-white' : 'bg-green-100 text-green-600' }}">
                 {{ $statusCounts['verified'] }}
             </span>
         </a>
         <a href="{{ route('admin.bullying-reports.index', array_merge($queryParams, ['status' => 'rejected'])) }}"
            class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ $status === 'rejected' ? 'bg-gray-600 text-white shadow-md' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50' }}">
-            Rejected
+            {{ __('Rejected') }}
             <span class="ml-2 px-2 py-0.5 rounded-full text-xs {{ $status === 'rejected' ? 'bg-gray-500 text-white' : 'bg-gray-100 text-gray-600' }}">
                 {{ $statusCounts['rejected'] }}
             </span>
@@ -161,13 +161,13 @@
             <table class="w-full">
                 <thead class="bg-gray-50 border-b border-gray-200">
                 <tr>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Report ID</th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Student</th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Title</th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Incident Date</th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Location</th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Created</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">{{ __('Report ID') }}</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">{{ __('Student') }}</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">{{ __('Title') }}</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">{{ __('Incident Date') }}</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">{{ __('Location') }}</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">{{ __('Status') }}</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">{{ __('Created') }}</th>
                 </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -215,7 +215,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5 mr-1">
                                         {!! $statusIcons[$report->status] !!}
                                     </svg>
-                                    {{ ucfirst($report->status) }}
+                                    {{ __(ucfirst($report->status)) }}
                                 </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -231,18 +231,18 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                                 </svg>
                             </div>
-                            <h3 class="text-lg font-semibold text-gray-800 mb-2">No reports found</h3>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ __('No reports found') }}</h3>
                             <p class="text-gray-500 max-w-md mx-auto">
                                 @if($search || $status !== 'all' || $dateFrom || $dateTo)
-                                    Try adjusting your filters to find what you're looking for.
+                                    {{ __('Try adjusting your filters to find what you\'re looking for.') }}
                                 @else
-                                    There are no bullying reports in the system yet.
+                                    {{ __('There are no bullying reports in the system yet.') }}
                                 @endif
                             </p>
                             @if($search || $status !== 'all' || $dateFrom || $dateTo)
                                 <a href="{{ route('admin.bullying-reports.index') }}"
                                    class="mt-4 inline-flex items-center px-4 py-2 bg-slate-700 hover:bg-slate-800 text-white font-medium rounded-lg transition-all duration-200">
-                                    Clear Filters
+                                    {{ __('Clear Filters') }}
                                 </a>
                             @endif
                         </td>
@@ -257,7 +257,7 @@
             <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p class="text-sm text-gray-600">
-                        Showing <strong>{{ $reports->firstItem() ?? 0 }}</strong> to <strong>{{ $reports->lastItem() ?? 0 }}</strong> of <strong>{{ $reports->total() }}</strong> results
+                        {{ __('Showing') }} <strong>{{ $reports->firstItem() ?? 0 }}</strong> {{ __('to') }} <strong>{{ $reports->lastItem() ?? 0 }}</strong> {{ __('of') }} <strong>{{ $reports->total() }}</strong> {{ __('results') }}
                     </p>
                     <div class="flex items-center gap-2">
                         {{ $reports->links('vendor.pagination.tailwind') }}
@@ -269,7 +269,7 @@
 
     <!-- Click Hint for Mobile -->
     <div class="mt-4 sm:hidden text-center text-xs text-gray-500">
-        <p>Tap any row to view report details</p>
+        <p>{{ __('Tap any row to view report details') }}</p>
     </div>
 @endsection
 
