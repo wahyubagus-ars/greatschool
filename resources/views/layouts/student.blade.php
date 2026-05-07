@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Student Dashboard') - Student Portal</title>
+    <title>@yield('title', __('Student Dashboard')) - {{ __('Student Portal') }}</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -32,7 +32,7 @@
             </svg>
         </button>
 
-        <h1 class="text-xl font-bold text-indigo-600 truncate">Student Portal</h1>
+        <h1 class="text-xl font-bold text-indigo-600 truncate">{{ __('Student Portal') }}</h1>
 
         <div class="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-medium text-sm">
             {{ strtoupper(substr(Auth::guard('student')->user()->full_name, 0, 1)) }}
@@ -58,7 +58,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-7 h-7 text-indigo-600 mr-2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <h2 class="text-2xl font-bold text-indigo-600">Student Portal</h2>
+                <h2 class="text-2xl font-bold text-indigo-600">{{ __('Student Portal') }}</h2>
             </div>
             <p class="text-sm text-gray-600 mt-2 truncate">{{ Auth::guard('student')->user()->full_name }}</p>
         </div>
@@ -72,7 +72,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5 mr-3 flex-shrink-0 text-gray-400 group-hover:text-indigo-600 transition-colors" :class="request()->routeIs('student.dashboard') ? 'text-indigo-600' : ''">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                 </svg>
-                <span class="font-medium">Dashboard</span>
+                <span class="font-medium">{{ __('Dashboard') }}</span>
             </a>
 
             <a href="{{ route('student.bullying-reports.index') }}"
@@ -82,18 +82,8 @@
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5 mr-3 flex-shrink-0 text-gray-400 group-hover:text-indigo-600 transition-colors" :class="request()->routeIs('student.bullying-reports.*') ? 'text-indigo-600' : ''">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
                 </svg>
-                <span class="font-medium">Bullying Reports</span>
+                <span class="font-medium">{{ __('Bullying Reports') }}</span>
             </a>
-
-{{--            <a href="{{ route('student.facility-reports.index') }}"--}}
-{{--               class="group flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-indigo-50 hover:text-indigo-700 transition-colors {{ request()->routeIs('student.facility-reports.*') ? 'bg-indigo-50 text-indigo-700 font-medium' : '' }}"--}}
-{{--               @click="sidebarOpen = false"--}}
-{{--            >--}}
-{{--                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5 mr-3 flex-shrink-0 text-gray-400 group-hover:text-indigo-600 transition-colors" :class="request()->routeIs('student.facility-reports.*') ? 'text-indigo-600' : ''">--}}
-{{--                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />--}}
-{{--                </svg>--}}
-{{--                <span class="font-medium">Facility Reports</span>--}}
-{{--            </a>--}}
 
             <a href="{{ route('student.literacy.index') }}"
                class="group flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-indigo-50 hover:text-indigo-700 transition-colors {{ request()->routeIs('student.literacy.*') ? 'bg-indigo-50 text-indigo-700 font-medium' : '' }}"
@@ -102,7 +92,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5 mr-3 flex-shrink-0 text-gray-400 group-hover:text-indigo-600 transition-colors" :class="request()->routeIs('student.literacy.*') ? 'text-indigo-600' : ''">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
                 </svg>
-                <span class="font-medium">Literacy</span>
+                <span class="font-medium">{{ __('Literacy') }}</span>
             </a>
 
             <a href="{{ route('student.quizzes.index') }}"
@@ -112,7 +102,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5 mr-3 flex-shrink-0 text-gray-400 group-hover:text-indigo-600 transition-colors" :class="request()->routeIs('student.quizzes.*') ? 'text-indigo-600' : ''">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
                 </svg>
-                <span class="font-medium">Quizzes</span>
+                <span class="font-medium">{{ __('Quizzes') }}</span>
             </a>
 
             <a href="{{ route('student.redemptions.index') }}"
@@ -122,7 +112,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5 mr-3 flex-shrink-0 text-gray-400 group-hover:text-indigo-600 transition-colors" :class="request()->routeIs('student.redemptions.*') ? 'text-indigo-600' : ''">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
                 </svg>
-                <span class="font-medium">Point Redemptions</span>
+                <span class="font-medium">{{ __('Point Redemptions') }}</span>
             </a>
         </nav>
 
@@ -133,12 +123,12 @@
                 <button type="submit"
                         class="group flex items-center w-full px-4 py-3 text-gray-700 rounded-xl hover:bg-red-50 hover:text-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
                         @click="sidebarOpen = false"
-                        onclick="return confirm('Are you sure you want to log out?');"
+                        onclick="return confirm('{{ __('Are you sure you want to log out?') }}');"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5 mr-3 flex-shrink-0 text-gray-400 group-hover:text-red-600 transition-colors">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
                     </svg>
-                    <span class="font-medium">Logout</span>
+                    <span class="font-medium">{{ __('Logout') }}</span>
                 </button>
             </form>
         </div>

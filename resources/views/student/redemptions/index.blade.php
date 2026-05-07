@@ -1,19 +1,19 @@
 @extends('layouts.student')
 
-@section('title', 'My Redemptions')
+@section('title', __('My Redemptions'))
 
 @section('page-header')
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">My Redemptions</h1>
-            <p class="mt-1 text-gray-600">View your point redemption history</p>
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">{{ __('My Redemptions') }}</h1>
+            <p class="mt-1 text-gray-600">{{ __('View your point redemption history') }}</p>
         </div>
         <a href="{{ route('student.redemptions.create') }}"
            class="inline-flex items-center justify-center px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 min-w-[140px]">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-4 h-4 mr-1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
-            New Redemption
+            {{ __('New Redemption') }}
         </a>
     </div>
 @endsection
@@ -27,11 +27,11 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
                     </svg>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-2">No redemptions yet</h3>
-                <p class="text-gray-500 mb-6">Generate your first QR code to redeem points for canteen vouchers!</p>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ __('No redemptions yet') }}</h3>
+                <p class="text-gray-500 mb-6">{{ __('Generate your first QR code to redeem points for canteen vouchers!') }}</p>
                 <a href="{{ route('student.redemptions.create') }}"
                    class="inline-flex items-center px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl transition-colors">
-                    Create Redemption
+                    {{ __('Create Redemption') }}
                 </a>
             </div>
         @else
@@ -39,12 +39,12 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                     <tr>
-                        <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">QR Code</th>
-                        <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Points</th>
-                        <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">IDR Value</th>
-                        <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Status</th>
-                        <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Created</th>
-                        <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
+                        <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">{{ __('QR Code') }}</th>
+                        <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">{{ __('Points') }}</th>
+                        <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">{{ __('IDR Value') }}</th>
+                        <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">{{ __('Status') }}</th>
+                        <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">{{ __('Created') }}</th>
+                        <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">{{ __('Actions') }}</th>
                     </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
@@ -68,19 +68,19 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if($redemption->status === 'pending')
                                     <span class="px-2.5 py-0.5 inline-flex text-xs font-medium rounded-full bg-yellow-100 text-yellow-800">
-                                        Pending
+                                        {{ __('Pending') }}
                                     </span>
                                 @elseif($redemption->status === 'redeemed')
                                     <span class="px-2.5 py-0.5 inline-flex text-xs font-medium rounded-full bg-green-100 text-green-800">
-                                        Redeemed
+                                        {{ __('Redeemed') }}
                                     </span>
                                 @elseif($redemption->status === 'expired')
                                     <span class="px-2.5 py-0.5 inline-flex text-xs font-medium rounded-full bg-gray-100 text-gray-800">
-                                        Expired
+                                        {{ __('Expired') }}
                                     </span>
                                 @else
                                     <span class="px-2.5 py-0.5 inline-flex text-xs font-medium rounded-full bg-red-100 text-red-800">
-                                        Cancelled
+                                        {{ __('Cancelled') }}
                                     </span>
                                 @endif
                             </td>
@@ -91,13 +91,13 @@
                                 @if($redemption->isValid())
                                     <a href="{{ route('student.redemptions.show', $redemption) }}"
                                        class="text-indigo-600 hover:text-indigo-900 inline-flex items-center">
-                                        View QR
+                                        {{ __('View QR') }}
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-4 h-4 ml-1">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                                         </svg>
                                     </a>
                                 @else
-                                    <span class="text-gray-400">Expired</span>
+                                    <span class="text-gray-400">{{ __('Expired') }}</span>
                                 @endif
                             </td>
                         </tr>

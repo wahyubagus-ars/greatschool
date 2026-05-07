@@ -1,12 +1,12 @@
 @extends('layouts.student')
 
-@section('title', 'Digital Literacy Resources')
+@section('title', __('Digital Literacy Resources'))
 
 @section('page-header')
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">Digital Literacy Resources</h1>
-            <p class="mt-1 text-gray-600">Educational content from trusted platforms to help you grow safely online</p>
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">{{ __('Digital Literacy Resources') }}</h1>
+            <p class="mt-1 text-gray-600">{{ __('Educational content from trusted platforms to help you grow safely online') }}</p>
         </div>
     </div>
 
@@ -18,7 +18,7 @@
             @endphp
             <a href="{{ $cat['slug'] === 'all' ? route('student.literacy.index') : route('student.literacy.index', ['category' => $cat['slug']]) }}"
                class="{{ $isActive ? 'bg-indigo-100 text-indigo-800' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }} px-3.5 py-1.5 rounded-full text-sm font-medium transition-colors">
-                {{ $cat['label'] }}
+                {{ __($cat['label']) }}
             </a>
         @endforeach
     </div>
@@ -50,7 +50,7 @@
                            ($content->platform === 'tiktok' ? 'bg-black' :
                            ($content->platform === 'instagram' ? 'bg-gradient-to-r from-[#405de6] via-[#5851db] to-[#c13584]' :
                            ($content->platform === 'medium' ? 'bg-green-600' : 'bg-gray-600'))) }}">
-                        {{ ucfirst($content->platform ?? 'External') }}
+                        {{ __(ucfirst($content->platform ?? 'External')) }}
                     </span>
                     </div>
                 </div>
@@ -59,14 +59,17 @@
                 <div class="p-5">
                     <div class="flex flex-wrap items-center gap-2 mb-3">
                     <span class="px-2 py-1 text-xs font-medium rounded-full bg-{{ $content->type === 'video' ? 'blue' : 'green' }}-100 text-{{ $content->type === 'video' ? 'blue' : 'green' }}-800">
-                        {{ ucfirst($content->type) }}
+                        {{ __($content->type) }}
                     </span>
                         @if($content->category)
                             <span class="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-700">
-                            {{ $content->category === 'anti-bullying' ? 'Anti-Bullying' :
-                                ($content->category === 'digital-literacy' ? 'Digital Literacy' :
-                                ($content->category === 'mental-health' ? 'Mental Health' :
-                                ($content->category === 'school-safety' ? 'School Safety' : ucfirst(str_replace('-', ' ', $content->category))))) }}
+                            @php
+                                $categoryLabel = $content->category === 'anti-bullying' ? 'Anti-Bullying' :
+                                    ($content->category === 'digital-literacy' ? 'Digital Literacy' :
+                                    ($content->category === 'mental-health' ? 'Mental Health' :
+                                    ($content->category === 'school-safety' ? 'School Safety' : ucfirst(str_replace('-', ' ', $content->category)))));
+                            @endphp
+                                {{ __($categoryLabel) }}
                         </span>
                         @endif
                     </div>
@@ -81,7 +84,7 @@
                     </h3>
 
                     <p class="mt-2 text-sm text-gray-600 line-clamp-2 min-h-[40px]">
-                        {{ Str::limit($content->content ?? 'Educational content to help students navigate digital spaces safely', 100) }}
+                        {{ Str::limit($content->content ?? __('Educational content to help students navigate digital spaces safely'), 100) }}
                     </p>
 
                     <div class="mt-4 pt-3 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
@@ -97,7 +100,7 @@
                            target="_blank"
                            rel="noopener noreferrer nofollow"
                            class="inline-flex items-center text-indigo-600 hover:text-indigo-700 text-sm font-medium transition-colors group">
-                            View Content
+                            {{ __('View Content') }}
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-4 h-4 ml-1 group-hover:translate-x-0.5 transition-transform">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
                             </svg>
@@ -112,13 +115,16 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
                     </svg>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-1">No literacy resources available</h3>
+                <h3 class="text-lg font-semibold text-gray-800 mb-1">{{ __('No literacy resources available') }}</h3>
                 <p class="text-gray-500 max-w-md mx-auto">
                     @if($category && $category !== 'all')
-                        No resources found in the "{{ $category === 'anti-bullying' ? 'Anti-Bullying' : ucfirst(str_replace('-', ' ', $category)) }}" category.
-                        <a href="{{ route('student.literacy.index') }}" class="text-indigo-600 hover:underline font-medium">View all content</a>.
+                        @php
+                            $currentCategoryLabel = $category === 'anti-bullying' ? 'Anti-Bullying' : ucfirst(str_replace('-', ' ', $category));
+                        @endphp
+                        {{ __('No resources found in the ":category" category.', ['category' => __($currentCategoryLabel)]) }}
+                        <a href="{{ route('student.literacy.index') }}" class="text-indigo-600 hover:underline font-medium">{{ __('View all content') }}</a>.
                     @else
-                        Your school administrators will add educational content from trusted platforms soon. Check back later!
+                        {{ __('Your school administrators will add educational content from trusted platforms soon. Check back later!') }}
                     @endif
                 </p>
             </div>
@@ -141,21 +147,21 @@
                 </svg>
             </div>
             <div class="mt-3 sm:mt-0">
-                <p class="text-sm text-blue-800 font-medium">Safety Notice</p>
+                <p class="text-sm text-blue-800 font-medium">{{ __('Safety Notice') }}</p>
                 <p class="mt-1 text-sm text-blue-700">
-                    All external content opens in a new tab. Remember to:
+                    {{ __('All external content opens in a new tab. Remember to:') }}
                     <span class="block mt-1.5 space-y-1">
                     <span class="flex items-start">
                         <span class="inline-flex items-center justify-center w-4 h-4 mr-2 rounded-full bg-blue-200 text-blue-800 text-xs font-bold">•</span>
-                        <span>Never share personal information</span>
+                        <span>{{ __('Never share personal information') }}</span>
                     </span>
                     <span class="flex items-start">
                         <span class="inline-flex items-center justify-center w-4 h-4 mr-2 rounded-full bg-blue-200 text-blue-800 text-xs font-bold">•</span>
-                        <span>Report inappropriate content to your teacher</span>
+                        <span>{{ __('Report inappropriate content to your teacher') }}</span>
                     </span>
                     <span class="flex items-start">
                         <span class="inline-flex items-center justify-center w-4 h-4 mr-2 rounded-full bg-blue-200 text-blue-800 text-xs font-bold">•</span>
-                        <span>Close tabs that make you uncomfortable</span>
+                        <span>{{ __('Close tabs that make you uncomfortable') }}</span>
                     </span>
                 </span>
                 </p>

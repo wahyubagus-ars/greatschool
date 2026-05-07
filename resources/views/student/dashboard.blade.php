@@ -1,18 +1,18 @@
 @extends('layouts.student')
 
-@section('title', 'Dashboard')
+@section('title', __('Dashboard'))
 
 @section('page-header')
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">Welcome, {{ Auth::guard('student')->user()->full_name }}!</h1>
-            <p class="mt-1 text-gray-600">Here's what's happening with your account.</p>
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">{{ __('Welcome, :name!', ['name' => Auth::guard('student')->user()->full_name]) }}</h1>
+            <p class="mt-1 text-gray-600">{{ __('Here\'s what\'s happening with your account.') }}</p>
         </div>
         <div class="flex items-center bg-indigo-50 text-indigo-700 px-4 py-2 rounded-xl text-sm font-medium">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-4 h-4 mr-1.5 flex-shrink-0">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span class="font-medium">{{ Auth::guard('student')->user()->total_points }} Points</span>
+            <span class="font-medium">{{ Auth::guard('student')->user()->total_points }} {{ __('Points') }}</span>
         </div>
     </div>
 @endsection
@@ -29,7 +29,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Total Points</p>
+                    <p class="text-sm font-medium text-gray-500">{{ __('Total Points') }}</p>
                     <p class="text-2xl font-bold text-gray-800 mt-1">{{ Auth::guard('student')->user()->total_points }}</p>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Bullying Reports</p>
+                    <p class="text-sm font-medium text-gray-500">{{ __('Bullying Reports') }}</p>
                     <p class="text-2xl font-bold text-gray-800 mt-1">{{ Auth::guard('student')->user()->bullyingReports->count() }}</p>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Facility Reports</p>
+                    <p class="text-sm font-medium text-gray-500">{{ __('Facility Reports') }}</p>
                     <p class="text-2xl font-bold text-gray-800 mt-1">{{ Auth::guard('student')->user()->facilityReports->count() }}</p>
                 </div>
             </div>
@@ -69,7 +69,7 @@
     <!-- Recent Activity -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <div class="px-5 py-4 sm:px-6 sm:py-5 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <h2 class="text-lg font-semibold text-gray-800">Recent Activity</h2>
+            <h2 class="text-lg font-semibold text-gray-800">{{ __('Recent Activity') }}</h2>
         </div>
 
         <div class="divide-y divide-gray-100">
@@ -126,22 +126,22 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-800 mb-2">No recent activity</h3>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ __('No recent activity') }}</h3>
                     <p class="text-gray-500 max-w-md mx-auto px-4">
-                        Start by submitting a report or taking a quiz to earn points and build your activity history!
+                        {{ __('Start by submitting a report or taking a quiz to earn points and build your activity history!') }}
                     </p>
                     <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4 px-4">
                         <a href="{{ route('student.bullying-reports.create') }}" class="inline-flex items-center justify-center px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl shadow-sm transition-all duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-4 h-4 mr-1.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
                             </svg>
-                            Report Bullying
+                            {{ __('Report Bullying') }}
                         </a>
                         <a href="{{ route('student.facility-reports.create') }}" class="inline-flex items-center justify-center px-5 py-2.5 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-xl transition-all duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-4 h-4 mr-1.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Report Facility Issue
+                            {{ __('Report Facility Issue') }}
                         </a>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
                 </svg>
             </div>
-            <span class="text-sm font-medium text-gray-700">Literacy</span>
+            <span class="text-sm font-medium text-gray-700">{{ __('Literacy') }}</span>
         </a>
         <a href="{{ route('student.quizzes.index') }}" class="flex flex-col items-center justify-center p-5 bg-white rounded-2xl border border-gray-200 hover:shadow-md transition-shadow">
             <div class="p-3 bg-green-50 rounded-xl mb-3">
@@ -165,7 +165,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
                 </svg>
             </div>
-            <span class="text-sm font-medium text-gray-700">Quizzes</span>
+            <span class="text-sm font-medium text-gray-700">{{ __('Quizzes') }}</span>
         </a>
     </div>
 @endsection
