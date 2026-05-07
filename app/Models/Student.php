@@ -196,4 +196,33 @@ class Student extends Authenticatable
             ->take(8)
             ->values();
     }
+
+    public function generateRedemptionQr(int $points): PointRedemption
+    {
+        // Validate points
+        if ($points <= 0 || $points > $this->available_points) {
+            throw new \InvalidArgumentException('Invalid points amount');
+        }
+
+        $idrValue = PointRedemption::pointsToIdr($points);
+
+        // Create redemption record with NEW simple code format
+        $redemption = $this->pointRedemptions()->create([
+            'qr_code' => PointRedemption::generateRedemptionCode(), // ← Changed from UUID
+            'points_redeemed' => $points,
+            'idr_value' => $idrValue,
+            'status' => 'pending',
+            'expires_at' => now()->addMinutes(15), // QR valid for 15 minutes
+        ]);
+
+        // Deduct available points immediately (prevents double-spending)
+        $this->decrement('available_points', $points);
+
+        return $redemption;
+    }
+
+    public function pointRedemptions()
+    {
+        return $this->hasMany(PointRedemption::class);
+    }
 }

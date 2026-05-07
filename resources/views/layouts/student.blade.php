@@ -85,15 +85,15 @@
                 <span class="font-medium">Bullying Reports</span>
             </a>
 
-            <a href="{{ route('student.facility-reports.index') }}"
-               class="group flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-indigo-50 hover:text-indigo-700 transition-colors {{ request()->routeIs('student.facility-reports.*') ? 'bg-indigo-50 text-indigo-700 font-medium' : '' }}"
-               @click="sidebarOpen = false"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5 mr-3 flex-shrink-0 text-gray-400 group-hover:text-indigo-600 transition-colors" :class="request()->routeIs('student.facility-reports.*') ? 'text-indigo-600' : ''">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span class="font-medium">Facility Reports</span>
-            </a>
+{{--            <a href="{{ route('student.facility-reports.index') }}"--}}
+{{--               class="group flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-indigo-50 hover:text-indigo-700 transition-colors {{ request()->routeIs('student.facility-reports.*') ? 'bg-indigo-50 text-indigo-700 font-medium' : '' }}"--}}
+{{--               @click="sidebarOpen = false"--}}
+{{--            >--}}
+{{--                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5 mr-3 flex-shrink-0 text-gray-400 group-hover:text-indigo-600 transition-colors" :class="request()->routeIs('student.facility-reports.*') ? 'text-indigo-600' : ''">--}}
+{{--                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />--}}
+{{--                </svg>--}}
+{{--                <span class="font-medium">Facility Reports</span>--}}
+{{--            </a>--}}
 
             <a href="{{ route('student.literacy.index') }}"
                class="group flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-indigo-50 hover:text-indigo-700 transition-colors {{ request()->routeIs('student.literacy.*') ? 'bg-indigo-50 text-indigo-700 font-medium' : '' }}"
@@ -113,6 +113,16 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
                 </svg>
                 <span class="font-medium">Quizzes</span>
+            </a>
+
+            <a href="{{ route('student.redemptions.index') }}"
+               class="group flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-indigo-50 hover:text-indigo-700 transition-colors {{ request()->routeIs('student.redemptions.*') ? 'bg-indigo-50 text-indigo-700 font-medium' : '' }}"
+               @click="sidebarOpen = false"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5 mr-3 flex-shrink-0 text-gray-400 group-hover:text-indigo-600 transition-colors" :class="request()->routeIs('student.redemptions.*') ? 'text-indigo-600' : ''">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+                </svg>
+                <span class="font-medium">Point Redemptions</span>
             </a>
         </nav>
 

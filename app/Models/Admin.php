@@ -90,4 +90,44 @@ class Admin extends Authenticatable
     {
         return $this->hasMany(FacilityReport::class, 'verified_by_admin_id');
     }
+
+    // Add to existing Admin model
+
+    public function redeemQr(string $qrCode, string $location = null): array
+    {
+        $redemption = PointRedemption::where('qr_code', $qrCode)
+            ->with('student')
+            ->first();
+
+        if (!$redemption) {
+            return ['success' => false, 'message' => 'Invalid QR code'];
+        }
+
+        if (!$redemption->isValid()) {
+            return ['success' => false, 'message' => 'QR code expired or already used'];
+        }
+
+        // Process redemption
+        $redemption->update([
+            'status' => 'redeemed',
+            'redeemed_at' => now(),
+            'redeemed_by_admin_id' => $this->id,
+            'location' => $location,
+        ]);
+
+        // Log transaction for audit
+        $redemption->student->pointTransactions()->create([
+            'source' => 'redemption',
+            'source_id' => $redemption->id,
+            'points' => -$redemption->points_redeemed, // Negative for deduction
+            'description' => "Redeemed {$redemption->idr_value} IDR voucher at {$location}",
+        ]);
+
+        return [
+            'success' => true,
+            'message' => "Successfully redeemed {$redemption->idr_value} IDR",
+            'student_name' => $redemption->student->full_name,
+            'idr_value' => $redemption->idr_value,
+        ];
+    }
 }

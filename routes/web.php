@@ -11,6 +11,9 @@ use App\Http\Controllers\Student\BullyingReportController;
 use App\Http\Controllers\Student\FacilityReportController;
 use App\Http\Controllers\Student\LiteracyController;
 use App\Http\Controllers\Student\QuizController;
+use App\Http\Controllers\Student\RedemptionController;
+
+use App\Http\Controllers\Admin\RedemptionController as AdminRedemptionController;
 use App\Http\Controllers\Student\StudentDashboardController;
 use App\Http\Controllers\StudentLoginController;
 use App\Models\BullyingReport;
@@ -58,6 +61,11 @@ Route::middleware('auth:student')->prefix('student')->name('student.')->group(fu
         Route::get('{quiz}/result', [QuizController::class, 'result'])->name('result');
         Route::post('{quiz}/navigate', [QuizController::class, 'navigate'])->name('navigate'); // Fixed route name
     });
+
+    Route::get('/redemptions', [RedemptionController::class, 'index'])->name('redemptions.index');
+    Route::get('/redemptions/create', [RedemptionController::class, 'create'])->name('redemptions.create');
+    Route::post('/redemptions', [RedemptionController::class, 'store'])->name('redemptions.store');
+    Route::get('/redemptions/{redemption}', [RedemptionController::class, 'show'])->name('redemptions.show');
 });
 
 
@@ -117,6 +125,11 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
             'index', 'show', 'create', 'store', 'edit', 'update', 'destroy'
         ]);
     });
+
+    Route::get('/redemptions', [AdminRedemptionController::class, 'index'])->name('redemptions.index');
+    Route::get('/redemptions/scan', [AdminRedemptionController::class, 'scan'])->name('redemptions.scan');
+    Route::post('/redemptions/process-scan', [AdminRedemptionController::class, 'processScan'])->name('redemptions.process-scan');
+    Route::get('/redemptions/history', [AdminRedemptionController::class, 'history'])->name('redemptions.history');
 });
 
 Route::get('lang/{locale}', function ($locale) {
