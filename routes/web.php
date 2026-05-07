@@ -120,9 +120,12 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
         Route::get('/download-template', [LiteracyContentController::class, 'downloadTemplate'])->name('download-template');
         Route::get('/download-failed-report/{sessionId}', [LiteracyContentController::class, 'downloadFailedReport'])->name('download-failed-report');
 
+        Route::get('/edit/{id}', [LiteracyContentController::class, 'edit'])->name('edit');
+
+        Route::post('/update/{id}', [LiteracyContentController::class, 'update'])->name('update');
         // Now register the resource routes (AFTER custom routes)
         Route::resource('', LiteracyContentController::class)->only([
-            'index', 'show', 'create', 'store', 'edit', 'update', 'destroy'
+            'index', 'show', 'create', 'store', 'destroy'
         ]);
     });
 
